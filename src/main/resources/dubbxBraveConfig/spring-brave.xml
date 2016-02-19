@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:c="http://www.springframework.org/schema/c" xmlns:lang="http://www.springframework.org/schema/lang" xmlns:p="http://www.springframework.org/schema/p" xmlns:util="http://www.springframework.org/schema/util"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/lang http://www.springframework.org/schema/lang/spring-lang.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+
+
+    <import resource="classpath:/dubbxBraveConfig/spring-brave-helper.xml" />
+    
+    <bean id="brave" class="com.doctor.dubbx.extend.brave.BraveFactoryBean" p:serviceName="${brave.serviceName}" />
+    <bean id="defaultDubboSpanNameProvider" class="com.doctor.dubbx.extend.brave.DefaultDubboSpanNameProvider" />
+    <bean id="dubboStringServiceNameProvider" class="com.doctor.dubbx.extend.brave.DubboStringServiceNameProvider" c:serviceName="${brave.serviceName}" />
+
+
+</beans>
