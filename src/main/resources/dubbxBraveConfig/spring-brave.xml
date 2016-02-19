@@ -9,7 +9,7 @@
     
     <bean id="brave" class="com.doctor.dubbx.extend.brave.BraveFactoryBean" p:serviceName="${brave.serviceName}" />
     <bean id="defaultDubboSpanNameProvider" class="com.doctor.dubbx.extend.brave.DefaultDubboSpanNameProvider" />
-    <bean id="dubboStringServiceNameProvider" class="com.doctor.dubbx.extend.brave.DubboStringServiceNameProvider" c:serviceName="${brave.serviceName}" />
+    <bean id="dubboStringServiceNameProvider" class="com.doctor.dubbx.extend.brave.DubboStringServiceNameProvider" />
 
 
 </beans>
