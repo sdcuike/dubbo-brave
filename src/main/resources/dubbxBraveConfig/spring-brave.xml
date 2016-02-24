@@ -6,10 +6,17 @@
 
 
     <import resource="classpath:/dubbxBraveConfig/spring-brave-helper.xml" />
-    
-    <bean id="brave" class="com.doctor.dubbx.extend.brave.BraveFactoryBean" p:serviceName="${brave.serviceName}" />
-    <bean id="defaultDubboSpanNameProvider" class="com.doctor.dubbx.extend.brave.DefaultDubboSpanNameProvider" />
-    <bean id="dubboStringServiceNameProvider" class="com.doctor.dubbx.extend.brave.DubboStringServiceNameProvider" />
+
+    <bean id="brave" class="com.doctor.dubbo.extend.brave.BraveFactoryBean" p:serviceName="${brave.serviceName}" p:spanCollector-ref="httpSpanCollector" />
+    <bean id="defaultDubboSpanNameProvider" class="com.doctor.dubbo.extend.brave.DefaultDubboSpanNameProvider" />
+    <bean id="dubboStringServiceNameProvider" class="com.doctor.dubbo.extend.brave.DefaulDubboServiceNameProvider" />
 
 
+    <bean id="httpSpanCollector" class="com.github.kristofa.brave.HttpSpanCollector" factory-method="create">
+        <constructor-arg type="java.lang.String" value="http://localhost:9411/" />
+        <constructor-arg type="com.github.kristofa.brave.SpanCollectorMetricsHandler" ref="testMetricsHander" />
+    </bean>
+
+
+    <bean id="testMetricsHander" class="com.doctor.dubbo.extend.brave.TestMetricsHander" />
 </beans>

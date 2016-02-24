@@ -10,6 +10,6 @@
 		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
 
 
-    <bean id="applicationContextProvider" class="com.doctor.dubbx.extend.brave.helper.ApplicationContextProvider" />
+    <bean id="applicationContextProvider" class="com.doctor.dubbo.extend.brave.helper.ApplicationContextProvider" />
 
 </beans>
