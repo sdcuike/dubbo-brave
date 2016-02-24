@@ -111,7 +111,12 @@
             <artifactId>commons-lang3</artifactId>
             <version>${commons-lang3.version}</version>
         </dependency>
-
+        <dependency>
+            <groupId>com.ofpay</groupId>
+            <artifactId>dubbo-rpc-jsonrpc</artifactId>
+            <version>1.0.2-SNAPSHOT</version>
+            <optional>true</optional>
+        </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>

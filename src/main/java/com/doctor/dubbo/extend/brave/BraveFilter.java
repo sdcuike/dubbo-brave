@@ -1,5 +1,8 @@
 package com.doctor.dubbo.extend.brave;
 
+import java.util.Map;
+import java.util.Map.Entry;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
@@ -13,6 +16,7 @@ import com.alibaba.dubbo.rpc.Result;
 import com.alibaba.dubbo.rpc.RpcContext;
 import com.alibaba.dubbo.rpc.RpcException;
 import com.doctor.dubbo.extend.brave.helper.ApplicationContextProvider;
+import com.doctor.jsonrpc4j.util.MDC;
 import com.github.kristofa.brave.Brave;
 
 /**
@@ -33,7 +37,13 @@ public class BraveFilter implements Filter {
         DubboSpanNameProvider spanNameProvider = context.getBean(DubboSpanNameProvider.class);
         DubboServiceNameProvider serviceNameProvider = context.getBean(DubboServiceNameProvider.class);
         RpcContext rpcContext = RpcContext.getContext();
+
         if (rpcContext.isProviderSide()) {
+            Map<String, String> propertyMap = MDC.getPropertyMap();
+            for (Entry<String, String> entry : propertyMap.entrySet()) {
+                rpcContext.setAttachment(entry.getKey(), entry.getValue());
+            }
+
             brave.serverRequestInterceptor().handle(new DubboProviderRequestAdapter(rpcContext, spanNameProvider));
         } else if (rpcContext.isConsumerSide()) {
             brave.clientRequestInterceptor().handle(new DubboConsumerRequestAdapter(rpcContext, spanNameProvider, serviceNameProvider));
@@ -49,6 +59,7 @@ public class BraveFilter implements Filter {
             } else if (rpcContext.isConsumerSide()) {
                 brave.clientResponseInterceptor().handle(new DubboConsumerResponseAdapter(result));
             }
+            MDC.clear();
         }
     }
 
