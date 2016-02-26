@@ -33,12 +33,13 @@ public class DubboProviderRequestAdapter implements ServerRequestAdapter {
             if (sampled.equals("0") || sampled.toLowerCase().equals("false")) {
                 return TraceData.builder().sample(false).build();
             } else {
-                final String parentSpanId = rpcContext.getAttachment(BraveHttpHeaders.ParentSpanId.getName());
+                // final String parentSpanId = rpcContext.getAttachment(BraveHttpHeaders.ParentSpanId.getName());
                 final String traceId = rpcContext.getAttachment(BraveHttpHeaders.TraceId.getName());
                 final String spanId = rpcContext.getAttachment(BraveHttpHeaders.SpanId.getName());
 
                 if (traceId != null && spanId != null) {
-                    SpanId span = getSpanId(traceId, spanId, parentSpanId);
+
+                    SpanId span = getSpanId(traceId, IdConversion.convertToString(IdConversion.convertToLong(spanId) + 1L), spanId);
                     return TraceData.builder().sample(true).spanId(span).build();
                 }
             }
