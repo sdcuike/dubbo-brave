@@ -24,7 +24,7 @@ import com.github.kristofa.brave.Brave;
  *
  * @time 2016年2月1日 下午4:05:31
  */
-@Activate(group = { Constants.PROVIDER, Constants.CONSUMER })
+@Activate(group = { Constants.PROVIDER, Constants.CONSUMER }, order = Integer.MAX_VALUE - 101)
 public class BraveFilter implements Filter {
     private Logger log = LoggerFactory.getLogger(BraveFilter.class);
 
@@ -59,7 +59,6 @@ public class BraveFilter implements Filter {
             } else if (rpcContext.isConsumerSide()) {
                 brave.clientResponseInterceptor().handle(new DubboConsumerResponseAdapter(result));
             }
-            MDC.clear();
         }
     }
 
