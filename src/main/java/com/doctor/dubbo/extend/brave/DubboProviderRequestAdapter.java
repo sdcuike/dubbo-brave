@@ -17,13 +17,14 @@ import com.github.kristofa.brave.http.BraveHttpHeaders;
  * @time 2016年2月2日 上午10:18:06
  */
 public class DubboProviderRequestAdapter implements ServerRequestAdapter {
-
+    private final String defaultSpanName;
     private final RpcContext rpcContext;
     private final DubboSpanNameProvider spanNameProvider;
 
-    public DubboProviderRequestAdapter(RpcContext rpcContext, DubboSpanNameProvider spanNameProvider) {
+    public DubboProviderRequestAdapter(RpcContext rpcContext, DubboSpanNameProvider spanNameProvider, String defaultSpanName) {
         this.rpcContext = rpcContext;
         this.spanNameProvider = spanNameProvider;
+        this.defaultSpanName = defaultSpanName;
     }
 
     @Override
@@ -49,7 +50,7 @@ public class DubboProviderRequestAdapter implements ServerRequestAdapter {
 
     @Override
     public String getSpanName() {
-        return spanNameProvider.spanName(rpcContext);
+        return spanNameProvider.spanName(rpcContext, defaultSpanName);
     }
 
     @Override

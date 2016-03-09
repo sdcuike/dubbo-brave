@@ -16,19 +16,21 @@ import com.github.kristofa.brave.http.BraveHttpHeaders;
  * @time 2016年2月2日 上午10:38:44
  */
 public class DubboConsumerRequestAdapter implements ClientRequestAdapter {
+    private final String defaultSpanName;
     private final RpcContext rpcContext;
     private final DubboSpanNameProvider spanNameProvider;
     private final DubboServiceNameProvider serviceNameProvider;
 
-    public DubboConsumerRequestAdapter(RpcContext rpcContext, DubboSpanNameProvider spanNameProvider, DubboServiceNameProvider serviceNameProvider) {
+    public DubboConsumerRequestAdapter(RpcContext rpcContext, DubboSpanNameProvider spanNameProvider, DubboServiceNameProvider serviceNameProvider, String defaultSpanName) {
         this.rpcContext = rpcContext;
         this.spanNameProvider = spanNameProvider;
         this.serviceNameProvider = serviceNameProvider;
+        this.defaultSpanName = defaultSpanName;
     }
 
     @Override
     public String getSpanName() {
-        return spanNameProvider.spanName(rpcContext);
+        return spanNameProvider.spanName(rpcContext, defaultSpanName);
     }
 
     @Override
@@ -52,7 +54,7 @@ public class DubboConsumerRequestAdapter implements ClientRequestAdapter {
 
     @Override
     public String getClientServiceName() {
-        return serviceNameProvider.serviceName(rpcContext);
+        return serviceNameProvider.serviceName(rpcContext, defaultSpanName);
     }
 
     @Override

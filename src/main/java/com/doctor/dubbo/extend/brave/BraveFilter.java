@@ -44,9 +44,9 @@ public class BraveFilter implements Filter {
                 rpcContext.setAttachment(entry.getKey(), entry.getValue());
             }
 
-            brave.serverRequestInterceptor().handle(new DubboProviderRequestAdapter(rpcContext, spanNameProvider));
+            brave.serverRequestInterceptor().handle(new DubboProviderRequestAdapter(rpcContext, spanNameProvider, null));
         } else if (rpcContext.isConsumerSide()) {
-            brave.clientRequestInterceptor().handle(new DubboConsumerRequestAdapter(rpcContext, spanNameProvider, serviceNameProvider));
+            brave.clientRequestInterceptor().handle(new DubboConsumerRequestAdapter(rpcContext, spanNameProvider, serviceNameProvider, null));
         }
 
         Result result = null;

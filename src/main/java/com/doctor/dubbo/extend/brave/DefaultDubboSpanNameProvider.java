@@ -11,8 +11,10 @@ import com.alibaba.dubbo.rpc.RpcContext;
 public class DefaultDubboSpanNameProvider implements DubboSpanNameProvider {
 
     @Override
-    public String spanName(RpcContext rpcContext) {
+    public String spanName(RpcContext rpcContext, String defaultValue) {
+        if (rpcContext == null || rpcContext.getUrl() == null || rpcContext.getUrl().getParameter(Constants.APPLICATION_KEY) == null) {
+            return defaultValue;
+        }
         return rpcContext.getUrl().getParameter(Constants.APPLICATION_KEY);
     }
-
 }
